@@ -1,0 +1,28 @@
+#lang racket
+(require racket/draw)
+(require racket/gui)
+(require racket/math)
+;(require 2htdp/image)
+(define no-pen (new pen% [style 'transparent]))
+(define no-brush (new brush% [style 'transparent]))
+(define red-brush (new brush% [color "red"]))
+(define white-brush (new brush% [color "white"]))
+(define red-pen (new pen% [color "black"] [width 2]))
+(define (draw-face dc)
+  ;(send dc rotate 1)
+  (send dc scale 0.4 0.4)
+  (send dc draw-rectangle 748 748 400 400)
+  (send dc set-pen no-pen)
+  (send dc set-brush white-brush)
+  (send dc draw-rectangle 750 750 400 200)
+  (send dc set-brush red-brush)
+  (send dc draw-rectangle 750 950 400 200))
+
+
+
+ 
+(define target (make-bitmap 900 800))
+(define dc (new bitmap-dc% [bitmap target]))
+ 
+(draw-face dc)
+(make-object image-snip% target)
