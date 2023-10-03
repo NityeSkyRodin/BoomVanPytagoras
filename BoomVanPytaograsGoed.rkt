@@ -7,12 +7,13 @@
   (class canvas%
     (super-new)
     (define/override (on-paint)
-      (let* ((dc (send this get-dc))
+      (let* ((start-time (current-milliseconds))
+             (dc (send this get-dc))
              (canvas-width (send this get-width))
              (base-size 400))
-        (send dc set-pen "blue" 2 'solid) ; Kleur en dikte van de pen instellen
-        (draw-pythagoras-tree dc 700 700 150 13 (/ pi 2))))) ; Aantal niveaus van de Boom van Pythagoras aanpassen
-    )
+        (draw-pythagoras-tree dc 700 700 150 20 (/ pi 2))
+        (let ((end-time (current-milliseconds)))
+          (displayln (format "Tijd voor het tekenen: ~a milliseconden" (- end-time start-time)))))))) ; Aantal niveaus van de Boom van Pythagoras aanpassen
 
 (define (draw-pythagoras-tree dc x y size index angle)
   (when (> index 0)
@@ -31,7 +32,6 @@
     (draw-pythagoras-tree dc x3 y3 new-size (- index 1) (- angle (/ pi 4)))))
 
 (define (draw dc x y x2 y2 x3 y3 x4 y4)
-  (send dc set-pen "red" 2 'solid) ; Kleur en dikte van de pen instellen voor de lijnen van de boom
   (send dc draw-line x y x2 y2)
   (send dc draw-line x2 y2 x3 y3)
   (send dc draw-line x3 y3 x4 y4)
